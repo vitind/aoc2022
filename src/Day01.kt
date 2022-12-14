@@ -1,15 +1,31 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        var highestCalories = 0
+        input.fold(0) { totalCalories, value ->
+            if (value.isNotEmpty()) {
+                totalCalories + value.toInt()
+            } else {    // value is empty -> check if it is the highest calories
+                if (highestCalories < totalCalories) {
+                    highestCalories = totalCalories
+                }
+                0
+            }
+        }
+        return highestCalories
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        val allTotalCalories = arrayListOf<Int>()
+        input.fold(0) { totalCalories, value ->
+            if (value.isNotEmpty()) {
+                totalCalories + value.toInt()
+            } else {
+                allTotalCalories.add(totalCalories)
+                0
+            }
+        }
+        return allTotalCalories.sortedDescending().take(3).sum()
     }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
 
     val input = readInput("Day01")
     part1(input).println()
